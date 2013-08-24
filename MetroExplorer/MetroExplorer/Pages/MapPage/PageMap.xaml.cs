@@ -207,11 +207,13 @@
         private async void MapPinElementMapPinTapped(object sender,
             MapPinTappedEventArgs e)
         {
+            throw new Exception("the code to be opened window");
+
             MapPin mapPinElement = (MapPin)sender;
 
-            if (mapPinElement.Focused)
+            if (mapPinElement.Focused) //如果坐标被选中了
             {
-                if (e.Marked)
+                if (e.Marked) //选中之后添加到数据库
                 {
                     await _mapLocationAccess.Add(
                         DataSourceType.Sqlite,
@@ -233,7 +235,7 @@
 
                     _mapPins.Add(mapPinElement);
                 }
-                else
+                else // 选中之后从数据库删除
                 {
                     MapLocationModel deleteLocation = _mapLocations.FirstOrDefault(location =>
                         location.ID.Equals(mapPinElement.ID));
